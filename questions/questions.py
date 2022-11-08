@@ -256,3 +256,17 @@ def baby_talk(s):
             if s[i:j+i] == s[j+i:j+(j+i)]:
                 max_length = max(max_length, j*2)
     return max_length
+
+def baby_talk(s):
+    window = len(s)
+    if window % 2 == 1: window -= 1
+    while window > 0:
+        for i in range(0, len(s) - window + 1):
+            substr = s[i:i+window]
+            half = window // 2
+            first = substr[:half]
+            second = substr[half:]
+            if first == second:
+                return window
+        window = window - 2
+    return window
