@@ -270,3 +270,45 @@ def baby_talk(s):
                 return window
         window = window - 2
     return window
+
+
+def closest_to_zero(nums):
+    m=100000000
+    for i in nums:
+        if abs(m)>=abs(i):
+            if abs(m)==abs(i):
+                if i>m:
+                    m=i
+            else:
+                m=i
+    return m
+
+ def closest_to_zero(nums):
+    best_value = nums[0]
+    for value in nums[1:]:
+        if abs(value) < abs(best_value):
+            best_value = value
+        elif abs(value) == abs(best_value) and value > best_value:
+            best_value = value
+    return best_value
+
+# This is what the class looks like that defines the binary
+# tree nodes.
+# class TreeNode:
+#     def __init__(self, value, left=None, right=None):
+#         self.value = value
+#         self.left = left
+#         self.right = right
+
+# root is an instance of the TreeNode class
+def check_tree(root):
+    sum = root.left.value + root.right.value
+    return root.value == sum
+
+
+def check_tree(root):
+    sum_of_child_values = root.left.value + root.right.value
+    return root.value == sum_of_child_values
+
+def check_tree(root):
+    return root.value == root.left.value + root.right.value
