@@ -61,7 +61,7 @@ def binary_search(lst, value, left=None, right=None):
 
     # Recursive case: value checked was greater than arg value
     elif lst[mid] > value:
-        return binary_search(lst, value, left=left, right=(mid-1)
+        return binary_search(lst, value, left=left, right=(mid-1))
 
     # Recursive case: value checked was less than arg value
     elif lst[mid] < value:
@@ -194,6 +194,8 @@ class MySLL:
                 self.tail = None
 
             return _val
+        while idx < 0:
+            idx += self._length
 
         # other indices
         previous_idx_node = self.traverse(idx - 1)
@@ -219,6 +221,12 @@ class MySLL:
         of the first occurrence
         else return -1
         """
+        _current_node = self.head
+        for i in range(self._length):
+            if _current_node.value == given_val:
+                return i
+            _current_node = _current_node.link
+        return -1
 
 
 def find_lists_with_minimum_value(lists):
@@ -283,7 +291,7 @@ def closest_to_zero(nums):
                 m=i
     return m
 
- def closest_to_zero(nums):
+def closest_to_zero(nums):
     best_value = nums[0]
     for value in nums[1:]:
         if abs(value) < abs(best_value):
@@ -312,3 +320,188 @@ def check_tree(root):
 
 def check_tree(root):
     return root.value == root.left.value + root.right.value
+
+def radix_sort(values):
+    # Find the maximum value in the input array
+    max_item = max(values)
+
+    # Find the number of digits in the largest value
+    digit_count = 1
+    while max_item > 0:
+        max_item /= 10
+        digit_count += 1
+
+    # Start with the rightmost digit for sorting
+    tens_place = 1
+
+    # Step 4
+    while digit_count > 0:
+        # Ten buckets because 10 possible digits
+        buckets = [0] * 10
+        n = len(values)
+
+        for i in range(n):
+            # Go through each value in values and put
+            # note that it's in the proper bucket
+            sort_digit = (values[i] // tens_place) % 10
+            buckets[sort_digit] += 1
+
+        # Do some fancy math so that we know which
+        # numbers are in which bucket
+        for i in range(1, 10):
+            buckets[i] += buckets[i-1]
+
+        # Move the values from the buckets into
+        # another list
+        sorted_values = [0] * n
+        i = n - 1
+        while i >= 0:
+            item = values[i]
+            sort_digit = (values[i] // tens_place) % 10
+            buckets[sort_digit] -= 1
+            sorted_position = buckets[sort_digit]
+            sorted_values[sorted_position] = item
+            i -= 1
+
+        # Put the values from the sorted list
+        # back into the origin values list
+        for i, item in enumerate(sorted_values):
+            values[i] = item
+
+        tens_place *= 10
+        digit_count -= 1
+
+
+def partition(values, left, right):
+    pivot = values[right]
+    star = left - 1
+    for i in range(left, right):
+        if values[i] <= pivot:
+            star += 1
+            values[star], values[i] = values[i], values[star]
+    star += 1
+    values[star], values[right] = values[right], values[star]
+    return star
+
+def quicksort(values, left=None, right=None):
+    if left is None and right is None:
+        left = 0
+        right = len(values) - 1
+    if left >= right or left < 0:
+        return
+    p = partition(values, left, right)
+    quicksort(values, left, p - 1)
+    quicksort(values, p + 1, right)
+
+def merge_sort(values, left=None, right=None):
+    if left is None and right is None:
+        left = 0
+        right = len(values) - 1
+
+    # Base case
+    if left >= right:
+        return
+
+    # Recursive cases
+    # Find the middle to split
+    middle = (right + left) // 2
+
+    # Sort the left half
+    merge_sort(values, left, middle)
+
+    # Sort the right half
+    merge_sort(values, middle + 1, right)
+
+    # Merge them together
+    merge(values, left, middle, right)
+
+def merge(values, left, middle, right):
+    right_start = middle + 1
+
+    # Terminal case to make sure we don't loop
+    # forever
+    if values[middle] <= values[right_start]:
+        return
+
+    # Merge the sub-lists by looping and comparing
+    # the values at the start of each list
+    while left <= middle and right_start <= right:
+        # The one on the left is less than the
+        # one on the right, so just keep going
+        if values[left] <= values[right_start]:
+            left += 1
+        else:
+            # In this case, the one on the right half
+            # is less than one in the left half, so
+            # we need to swap the values
+            value = values[right_start]
+            index = right_start
+
+            # Move the all of the values to the right
+            # by one
+            while index != left:
+                values[index] = values[index - 1]
+                index -= 1
+
+            # Put the value into the new "empty" place
+            values[left] = value
+
+            # Increment all of the indexes
+            left += 1
+            middle += 1
+            right_start += 1
+
+def selection_sort(values):
+    for i in range(len(values)):
+        min_value_index = i
+        for j in range(i + 1, len(values)):
+            if values[min_value_index] > values[j]:
+                min_value_index = j
+        values[i], values[min_value_index] = values[min_value_index], values[i]
+
+
+def bubble_sort(values):
+    n = len(values)
+    for i in range(n - 1):
+        for j in range(0, n - i - 1):
+            if values[j] > values[j + 1]:
+                values[j], values[j + 1] = values[j + 1], values[j]
+
+def linear_search(values, target):
+    for i, value in enumerate(values):
+        if target == value:
+            return i
+    return -1
+
+def binary_search(values, target):
+    left = 0
+    right = len(values) - 1
+
+    while left <= right:
+        middle = (left + right) // 2
+        if values[middle] < target:
+            left = middle + 1
+        elif values[middle] > target:
+            right = middle - 1
+        else:
+            return middle
+
+    return -1
+
+def binary_search(values, target, left=None, right=None):
+    if left is None and right is None:
+        left = 0
+        right = len(values) - 1
+
+    # Base case: did not find item
+    if left > right:
+        return -1
+
+    # Recursive case
+    middle = (left + right) // 2
+    if values[middle] < target:
+        return binary_search(values, target, middle + 1, right)
+    elif values[middle] > target:
+        return binary_search(values, target, left, middle - 1)
+    else:
+      return middle
