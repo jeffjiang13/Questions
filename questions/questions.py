@@ -505,3 +505,49 @@ def binary_search(values, target, left=None, right=None):
         return binary_search(values, target, left, middle - 1)
     else:
       return middle
+
+def reverse_prefix(s, letter):
+    # Find the index of the letter
+    index = s.find(letter)
+
+    # If the letter is not in the string, return
+    # the original string
+    if index == -1:
+        return s
+
+    # Reverse the string up to the letter
+    return s[:index + 1][::-1] + s[index + 1:]
+
+def reverse_prefix(s, letter):
+    index = -1
+    for i, c in enumerate(s):
+        if c == letter:
+            index = i
+            break
+    if index == -1:
+        return s
+    prefix = s[:index + 1]
+    prefix_reversed = ''.join(reversed(prefix))
+    return prefix_reversed + s[index + 1:]
+
+def reverse_prefix(s, letter):
+    index = s.find(letter)
+    if index == -1:
+        return s
+    prefix = s[:index + 1]
+    prefix_reversed = ''.join(reversed(prefix))
+    return prefix_reversed + s[index + 1:]
+
+def is_double_reversible(num):
+    return num == 0 or num % 10 != 0
+
+def is_double_reversible(num):
+    s = str(num)
+    s = ''.join(reversed(s))
+    reversed_once = int(s)
+
+    s = str(reversed_once)
+    s = ''.join(reversed(s))
+    reversed_twice = int(s)
+
+    return num == reversed_twice
