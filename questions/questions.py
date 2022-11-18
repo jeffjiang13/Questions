@@ -551,3 +551,86 @@ def is_double_reversible(num):
     reversed_twice = int(s)
 
     return num == reversed_twice
+
+
+def parse_calculation(s):
+    op = s.split(" ")
+    return eval(f'{op[1]} {op[0]} {op[2]}')
+
+
+def find_expression_bounds(starting_index, e) -> int:
+    stack_depth = 1
+    index = starting_index
+    if "(" in e[starting_index]:
+        stack_depth += 1
+        index += 1
+        while stack_depth > starting_index:
+            if ")" in e[index]:
+                stack_depth -= 1
+            elif "(" in e[index]:
+                stack_depth += 1
+            index += 1
+    else:
+        index += 1
+    return index
+
+
+def parse_calculation_ext(s):
+    e = s.split(" ")
+    if "(" not in e[0]:
+        return int(e[0])
+    else:
+        left_bound = find_expression_bounds(1, e)
+        left = ' '.join(e[1:left_bound])
+        right = ' '.join(e[left_bound:])[:-1]
+
+        if "+" in e[0]:
+            return parse_calculation_ext(left) + parse_calculation_ext(right)
+        elif "-" in e[0]:
+            return parse_calculation_ext(left) - parse_calculation_ext(right)
+        elif "*" in e[0]:
+            return parse_calculation_ext(left) * parse_calculation_ext(right)
+        elif "/" in e[0]:
+            return parse_calculation_ext(left) / parse_calculation_ext(right)
+
+
+def parse_calculation_ext(s):
+    start = s.rfind("(")
+    stop = start + s[start:].find(")") + 1
+
+    if start == -1:
+        return eval(s)
+
+    substring = s[start:stop]
+    evaluated_string = s.replace(substring, str(parse_calculation(substring)))
+    return parse_calculation_ext(evaluated_string)
+
+
+def parse_calculation(s):
+    v = s.strip("()").split()
+    return eval(v[1] + v[0] + v[2])
+
+import re
+
+def calc_match(match):
+  s = match.group()
+  parts = s.split(' ')
+  return str(eval(f'{parts[1]} {parts[0][1]} {parts[2]}'))
+
+s = "(- (+ (+ 2 4 ) (* 1 8 ) ) 15 )"
+
+while '(' in s:
+  s = re.sub('\([+-/*] \d+ \d+ \)', calc_match, s)
+
+
+import re
+
+def calc_match(match):
+  s = match.group()
+  parts = s.split(' ')
+  return str(eval(f'{parts[1]} {parts[0][1]} {parts[2]}'))
+
+s = "(- (+ (+ 2 4 ) (* 1 8 ) ) 15 )"
+
+while '(' in s:
+  s = re.sub('\([+-/*] \d+ \d+ \)', calc_match, s)
