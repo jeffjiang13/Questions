@@ -634,3 +634,35 @@ s = "(- (+ (+ 2 4 ) (* 1 8 ) ) 15 )"
 
 while '(' in s:
   s = re.sub('\([+-/*] \d+ \d+ \)', calc_match, s)
+
+def count_letters(string):
+    count = 0
+    for c in string:
+        if c == "H":
+            count += 1
+    return count
+
+
+def count_letters(string):
+    count = 0
+    letter_to_look_for = "H"
+    for c in string:
+        if c == letter_to_look_for:
+            if letter_to_look_for == "H":
+                letter_to_look_for = "A"
+            elif letter_to_look_for == "A":
+                letter_to_look_for = "H"
+                count += 1
+    return count
+
+def count_letters(string):
+    letter_sequence = "HACK"
+    sequence_index = 0
+    count = 0
+    for c in string:
+        if c == letter_sequence[sequence_index]:
+            sequence_index += 1
+            if sequence_index == len(letter_sequence):
+                count += 1
+                sequence_index = 0
+    return count
