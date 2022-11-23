@@ -666,3 +666,93 @@ def count_letters(string):
                 count += 1
                 sequence_index = 0
     return count
+
+def does_product_exist(nums, left, right, target):
+    while left < right:
+        product = nums[left] * nums[right]
+        if product == target:
+            return True
+        elif product < target:
+            left += 1
+        else:
+            right -= 1
+    return False
+import math
+def find_larger_area(s, r):
+    if s * s > math.pi * r * r:
+        return "SQUARE"
+    else:
+        return "CIRCLE"
+
+def make_integer(nums, length):
+    result = []
+    for i in range(length):
+        result.append(nums[i])
+    return result
+
+def does_product_exist(nums, left, right, target):
+    for i in range(left, right + 1):
+        for j in range(i + 1, right + 1):
+            if nums[i] * nums[j] == target:
+                return True
+    return False
+
+def make_integer(nums, length):
+    result = sorted(nums)
+    resu = result[0:length]
+    s = [str(i) for i in resu]
+    res = int("".join(s))
+    return res
+from functools import reduce
+
+
+def make_integer(nums, length):
+    return reduce(lambda acc, num: acc * 10 + num, sorted(nums)[:length], 0)
+
+def make_integer(nums, length):
+    digits = sorted(nums)[:length]
+    return int(''.join([str(d) for d in digits]))
+
+def make_integer(nums, length):
+    nums = sorted(nums)
+    value = 0
+    for i in range(length):
+        value = value * 10 + nums[i]
+    return value
+
+def does_product_exist(nums, left, right, target):
+    for i in range(left, right + 1):
+        for j in range(i + 1, right + 1):
+            if nums[i] * nums[j] == target:
+                return True
+    return False
+
+def find_larger_area(s, r):
+    square_area = s * s
+    circle_area = math.pi * r * r
+    if square_area > circle_area:
+        return "SQUARE"
+    else:
+        return "CIRCLE"
+
+def make_integer(nums, length):
+    result = sorted(nums)
+    resu = result[0:length]
+    s = [str(i) for i in resu]
+    res = int("".join(s))
+    return res
+
+
+def make_integer(nums, length):
+    nums.sort()
+    small = ''
+    for n in nums[0:length]:
+        small += str(n)
+    return int(small)
+
+def does_product_exist(nums, left, right, target):
+    for i in nums[left: right + 1]:
+        for j in nums[left: right +1]:
+            if i * j == target:
+                return True
+    return False
