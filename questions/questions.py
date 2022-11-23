@@ -756,3 +756,29 @@ def does_product_exist(nums, left, right, target):
             if i * j == target:
                 return True
     return False
+
+
+
+
+def find_odd(nums):
+    for i in nums:
+        if nums.count(i) % 2 != 0:
+            return i
+
+def fix_misspellings(corrections):
+    return [
+        word[:position-1] + word[position:]
+        for word, position
+        in [get("word", "position")(correction)
+            for correction
+            in corrections
+        ]
+    ]
+def fix_misspellings(corrections):
+    fixed = []
+    for correction in corrections:
+        word = correction["word"]
+        p = correction["position"]
+        fixed_word = word[:p-1] + word[p:]
+        fixed.append(fixed_word)
+    return fixed
