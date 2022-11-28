@@ -782,3 +782,32 @@ def fix_misspellings(corrections):
         fixed_word = word[:p-1] + word[p:]
         fixed.append(fixed_word)
     return fixed
+
+def digits_to_number(digits):
+    s = ''.join([str(d) for d in digits])
+    return int(s)
+
+
+def add_digits(digits1, digits2):
+    num1 = digits_to_number(digits1)
+    num2 = digits_to_number(digits2)
+    return num1 + num2
+
+
+def add_reversed_digits(reversed_digits1, reversed_digits2):
+    digits1 = reversed(reversed_digits1)
+    digits2 = reversed(reversed_digits2)
+    return add_digits(digits1, digits2)
+
+
+def sum_reversed_digits_as_list(reversed_digits1, reversed_digits2):
+    sum = add_reversed_digits(reversed_digits1, reversed_digits2)
+    return [int(d) for d in str(sum)]
+
+
+def sum_reversed_digits_as_reversed_list(reversed_digits1, reversed_digits2):
+    l = sum_reversed_digits_as_list(reversed_digits1, reversed_digits2)
+    return list(reversed(l))
+
+def sum_reversed_digits_as_reversed_list(reversed_digits1, reversed_digits2):
+    return list(reversed(str(int(''.join(str(d) for d in reversed_digits1)) + int(''.join(str(d) for d in reversed_digits2)))))
