@@ -811,3 +811,14 @@ def sum_reversed_digits_as_reversed_list(reversed_digits1, reversed_digits2):
 
 def sum_reversed_digits_as_reversed_list(reversed_digits1, reversed_digits2):
     return list(reversed(str(int(''.join(str(d) for d in reversed_digits1)) + int(''.join(str(d) for d in reversed_digits2)))))
+
+def pipe_outputs(num_pipes, steps):
+    f = num_pipes * [8]
+    for s in steps:
+        idx = s[0]-1
+        if len(s) == 2:
+            f.insert(idx+1,(f[idx]-s[1]))
+            f[idx] = s[1]
+        if len(s) == 1:
+            f[idx] = f[idx]+f.pop(idx+1)
+    return f
