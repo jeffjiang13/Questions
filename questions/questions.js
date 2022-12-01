@@ -99,3 +99,34 @@ var twoSum = function(nums, target) {
 
 
 };
+
+
+function bubbleSort(items) {
+  const length = items.length;
+  for(let i=0; i < (length-1); i++) {
+      for(let j=0; j < (length-1); j++) {
+          if(items[j] > items[j+1]) {
+              [items[j], items[j+1]] = [items[j+1], items[j]];
+          }
+      }
+  }
+  return items;
+}
+
+function selectionSort(items) {
+  const length = items.length;
+  for(let start=0; start < length-1; start++) {
+      let minIdx = start;
+      let minVal = items[start];
+      for(let i=start+1; i < length; i++) {
+          if(items[i] < minVal) {
+              minVal = items[i];
+              minIdx = i;
+          }
+      }
+      if(minIdx > start) {
+          [items[start], items[minIdx]] = [items[minIdx],items[start]];
+      }
+  }
+  return items;
+}
