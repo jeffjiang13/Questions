@@ -1,42 +1,42 @@
 function binarySearch(numbers, target) {
-    let start = 0;
-    let end = numbers.length - 1;
+  let start = 0;
+  let end = numbers.length - 1;
 
-    while (start <= end) {
-      const mid = Math.floor((start + end) / 2);
-      const guess = numbers[mid];
-      if (numbers[mid] === target) {
-        return guess;;
-      }
-      else if (target < guess) {
-        end = mid - 1;
-      }else {
-        start = mid + 1;
-      }
+  while (start <= end) {
+    const mid = Math.floor((start + end) / 2);
+    const guess = numbers[mid];
+    if (numbers[mid] === target) {
+      return guess;;
     }
-    return null;
+    else if (target < guess) {
+      end = mid - 1;
+    } else {
+      start = mid + 1;
+    }
   }
-
-
-  function binarySearch(items, target) {
-    let start = 0;
-    let end = items.length-1;
-
-    while(start <= end) {
-        let half = start + Math.floor((end - start) / 2);
-        const value = items[half];
-        if(target === value) {
-            return value;
-        } else if(target < value) {
-            end = half - 1;
-        } else {
-            start = half + 1;
-        }
-    }
-    return null;
+  return null;
 }
 
-function binary_search(lst, value, left=undefined, right=undefined) {
+
+function binarySearch(items, target) {
+  let start = 0;
+  let end = items.length - 1;
+
+  while (start <= end) {
+    let half = start + Math.floor((end - start) / 2);
+    const value = items[half];
+    if (target === value) {
+      return value;
+    } else if (target < value) {
+      end = half - 1;
+    } else {
+      start = half + 1;
+    }
+  }
+  return null;
+}
+
+function binary_search(lst, value, left = undefined, right = undefined) {
   /*
   Return index of value in sorted list.
   If value is not present or list is empty, return -1
@@ -75,26 +75,26 @@ function binary_search(lst, value, left=undefined, right=undefined) {
   } else if (lst[mid] > value) {
 
     // Recursive case: value checked was greater than arg value
-    return binary_search(lst, value, left=left, right=(mid-1));
+    return binary_search(lst, value, left = left, right = (mid - 1));
 
   } else if (lst[mid] < value) {
 
     // Recursive case: value checked was less than arg value
-    return binary_search(lst, value, left=(mid+1), right=right);
+    return binary_search(lst, value, left = (mid + 1), right = right);
 
   }
 }
 
 
 
-var twoSum = function(nums, target) {
+var twoSum = function (nums, target) {
 
-  for (let i = 0; i < nums.length; i++){
-      for (let j = i + 1; j < nums.length; j++){
-          if(nums[i] + nums[j] === target){
-              return [i,j]
-          }
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] + nums[j] === target) {
+        return [i, j]
       }
+    }
   }
 
 
@@ -103,30 +103,98 @@ var twoSum = function(nums, target) {
 
 function bubbleSort(items) {
   const length = items.length;
-  for(let i=0; i < (length-1); i++) {
-      for(let j=0; j < (length-1); j++) {
-          if(items[j] > items[j+1]) {
-              [items[j], items[j+1]] = [items[j+1], items[j]];
-          }
+  for (let i = 0; i < (length - 1); i++) {
+    for (let j = 0; j < (length - 1); j++) {
+      if (items[j] > items[j + 1]) {
+        [items[j], items[j + 1]] = [items[j + 1], items[j]];
       }
+    }
   }
   return items;
 }
 
 function selectionSort(items) {
   const length = items.length;
-  for(let start=0; start < length-1; start++) {
-      let minIdx = start;
-      let minVal = items[start];
-      for(let i=start+1; i < length; i++) {
-          if(items[i] < minVal) {
-              minVal = items[i];
-              minIdx = i;
-          }
+  for (let start = 0; start < length - 1; start++) {
+    let minIdx = start;
+    let minVal = items[start];
+    for (let i = start + 1; i < length; i++) {
+      if (items[i] < minVal) {
+        minVal = items[i];
+        minIdx = i;
       }
-      if(minIdx > start) {
-          [items[start], items[minIdx]] = [items[minIdx],items[start]];
-      }
+    }
+    if (minIdx > start) {
+      [items[start], items[minIdx]] = [items[minIdx], items[start]];
+    }
   }
   return items;
+}
+
+
+
+
+function mergeSort(values, left = null, right = null) {
+
+  if (left === null && right === null) {
+    left = 0;
+    right = values.length - 1;
+  }
+  if (left >= right) {
+    return;
+  }
+  const middle = Math.floor((left + right) / 2);
+  mergeSort(values, left, middle);
+  mergeSort(values, middle + 1, right);
+  merge(values, left, middle, right);
+}
+
+function merge(values, left, middle, right) {
+  let rightStart = middle + 1
+  if (values[middle] <= values[rightStart]) {
+    return;
+  }
+  while (left <= middle && rightStart <= right) {
+    if (values[left] <= values[rightStart]) {
+      left++;
+    } else {
+      let value = values[rightStart];
+      let index = rightStart;
+      while (index !== left) {
+        values[index] = values[index - 1];
+        index--;
+      }
+      values[left] = value;
+      left++;
+      middle++;
+      rightStart++;
+    }
+  }
+}
+function partition(values, left, right) {
+  let pivot = values[right];
+  star = left - 1
+  for (let i = left; i < right; i++) {
+    if (values[i] <= pivot) {
+      star++;
+      [values[star], values[i]] = [values[i], values[star]];
+    }
+  }
+  star++
+  [values[star], values[right]] = [values[right], values[star]];
+  return star;
+
+}
+
+function quicksort(values, left=null, right=null) {
+  if (left === null && right === null) {
+    left = 0;
+    right = values.length - 1;
+  }
+  if (left >= right || left < 0) {
+    return;
+  }
+  let pivot = partition(values, left, right);
+  quicksort(values, left, pivot - 1);
+  quicksort(values, pivot + 1, right);
 }
