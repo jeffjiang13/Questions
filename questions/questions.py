@@ -822,3 +822,18 @@ def pipe_outputs(num_pipes, steps):
         if len(s) == 1:
             f[idx] = f[idx]+f.pop(idx+1)
     return f
+
+def can_make_row(num_short, num_long, goal):
+    leftover = goal - num_long * 5
+    if leftover < 0:
+        leftover = goal % 5
+    return leftover <= num_short
+
+def can_make_row(num_short, num_long, goal):
+    while goal >= 5 and num_long > 0:
+        goal -= 5
+        num_long -= 1
+    while goal > 0 and num_short > 0:
+        goal -= 1
+        num_short -= 1
+    return goal == 0
