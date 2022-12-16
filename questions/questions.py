@@ -837,3 +837,12 @@ def can_make_row(num_short, num_long, goal):
         goal -= 1
         num_short -= 1
     return goal == 0
+
+def count_depth_increases(depths):
+    count = 0
+    for i in range(len(depths) - 3):
+        first_sum = depths[i] + depths[i + 1] + depths[i + 2]
+        next_sum = depths[i + 1] + depths[i + 2] + depths[i + 3]
+        if first_sum < next_sum:
+            count += 1
+    return count
